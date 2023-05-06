@@ -64,5 +64,5 @@ I believe it won't stump you, but I still choose to take a screenshot of the gen
 
 These are the content that you can customize to pass in, all of which are optional
 Of course, just like all mui components, you can also use sx to change the overall style of the components. If you encounter any problems, please come to Github to submit Issues
-<a href="https://github.com/SGDS666/mui-treeselect/edit/master/README.md">github</a>
+<a href="https://github.com/SGDS666/m-treeselect">github</a>
 

@@ -1,279 +1,68 @@
-# 这是一个非常简单的实现布局的库
-# This is a very simple package to implement the layout
-## 名称 name
+This is a tree selector completely based on mui component encapsulation without using third-party libraries
 
-Reading of NB [njuː biː]
-This word means very very crazy,very very  amazing and very very  admirable
+Has the following characteristics
 
-## 安装 
-## install
+1.Fully compatible with MUI theme configuration
 
-```shell
-    npm i react-nblayout
+2 Height Customization Usage
 
-    yarn add react-nblayout
-```
-## 导入 
-## import
+3 Easy to get started 0 Learning costs
 
-```javascript
-import  { NBLayout,col, row } from 'react-nblayout'
+4 fully controlled components (state must be manually controlled, but believe me, this has been optimized very easily)
 
-```
+Let's take a look at what it looks like first
 
-## 仅使用布局功能
-## Only use the layout ability
+<img width="859" alt="image" src="https://user-images.githubusercontent.com/86196091/236647319-ed40f1f5-beb4-4d05-b697-204a664cd16c.png">
 
-```javascript
-const simpleDemo = () => {
-    return NBLayout(
-        [
-            row([<Ele/>,<Ele/>,<Ele/>,<Ele/>,<Ele/>]),
-            col([
-                <Ele/>,
-                <Ele/>,
-                <Ele/>,
-                <Ele/>,
-                row([<Ele/>,<Ele/>,<Ele/>,col([
-                                            <Ele/>,
-                                            <Ele/>,
-                                          ])
-                ])
-            ])
-        ]
-    )
-}
+The two sides look a bit different because the one on the left is included in the MUI theme and custom folder icons
 
-```
-### 效果
-### preview
-![预览](https://gitee.com/wdppx/macos/raw/master/src/image/demo.png "预览")
+<img width="509" alt="image" src="https://user-images.githubusercontent.com/86196091/236647351-6b242202-6e8c-4282-a1f1-61f72627a72a.png">
 
-## 进阶使用
-## Advanced
-```javascript
-const Demo = () => {
+First of all, I believe everyone will be more concerned about data format because it involves practical usage experience
+I have designed two data schemes. One is the default format, like this
 
-    return NBLayout(
-        [
-            row([<Div />, <Div />, <Div />, <Div />, <Div />, <Div />, <Div />, <Div />, <Div />]),
-            row([
-                col([<Div />, <Div />,]),
-                col([<Div />, <Div />,]),
-            ]),
-            col([
-                <Div />,
-                row([<Div />, <Div />],{background:"#122b2182"},{background:"#514663",color:"white",flexGrow:0}),
-                row([<Div />, <Div />, <Div />],{},{flexGrow:0}),
-                row([<Div />, <Div />, <Div />, <Div />]),
-                row([<Div />, <Div />, <Div />, <Div />,<Div />])
-            ],{background:"black",fontSize:"20px",color:"white"}),
-        ],
-        {height:"100vh",background:"white"},
-    )
-}
+<img width="422" alt="image" src="https://user-images.githubusercontent.com/86196091/236647435-4e7f32de-e80e-4d0b-90aa-6b98ae4fe26b.png">
 
-```
-### 效果 preview
-![预览](https://gitee.com/wdppx/macos/raw/master/src/image/demo2.png "预览")
-```typescript
-const boxStyle:React.CSSProperties = {
-    position:"relative",
-    
-}
-const itemStyle:React.CSSProperties={
-    marginBottom:"2vh",
-    background:"white"
-}
-const mockData = ["nb1","nb2","nb3","nb4","nb5"]
-const Demo = () => {
-    
-    return NBLayout(
-        [
-            row([
-                col(mockData.map(item => <Div>{item}</Div>),{...boxStyle,top:"2vh"},{...itemStyle}),
-                col(mockData.map(item => <Div>{item}</Div>),{...boxStyle,top:"6vh"},{...itemStyle}),
-                col(mockData.map(item => <Div>{item}</Div>),{...boxStyle,top:"10vh"},{...itemStyle}),
-                col(mockData.map(item => <Div>{item}</Div>),{...boxStyle,top:"14vh"},{...itemStyle}),
-                col(mockData.map(item => <Div>{item}</Div>),{...boxStyle,top:"18vh"},{...itemStyle})
-            ])
-            //NBlayout||row||col 接受到的组件数组渲染时会自动填充key 所以不用传key
-            /*
-            NBlayout||row||col The component array received by col will 
-            be automatically filled with keys when rendering, 
-            so no key needs to be passed
-            */
-        ],
-        {height:"100vh",background:"black"},"myclass"
-    )
-}
-```
-### 效果 preview
-![预览](https://gitee.com/wdppx/macos/raw/master/src/image/demo4.png "预览")
+The ID determines the key value of your actual control state
+The final form of the component is determined by fixed data and controlled checklists in the state
+The label determines the content displayed on the page
+Whether children have a value determines whether they belong to the directory or a selection item
 
-## 支持响应式 Responsive
+This is the default format. You don't need to configure anything, just pass in the data that meets the format to use it
+But I believe that formatting is a headache in actual business, so I also added a custom format for us to take a look at the following data
+
+<img width="447" alt="image" src="https://user-images.githubusercontent.com/86196091/236647593-76a5348a-e48c-4368-8ebf-0262fd859df4.png">
+
+Adapting components to different formats is the best way to improve efficiency. By specifying the corresponding key, development can proceed happily like this
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/86196091/236647625-013aef0c-35ed-450c-95f2-c190739a1976.png">
+
+These data are just the foundation for the initial rendering of the component, and the most challenging aspect is obtaining the data
+We can set the default selected items for the component and pass in a checkedDataids array
+The data type is the corresponding 'id' value, so there is nothing else to note. It is completely controlled. You need to obtain the latest status update of the component through onChange. The checked Dataids component can work successfully. Let's take a look at the demonstration effect
+
+For the convenience of the demonstration, I added something that looks more intuitive, which is the actual value of the state we maintain
+
+<img width="534" alt="image" src="https://user-images.githubusercontent.com/86196091/236647736-34801150-70ee-4e5e-82f2-8cee2c9328ae.png">
+
+![Kapture 2023-05-07 at 05 48 05](https://user-images.githubusercontent.com/86196091/236647964-acd7436f-6dce-4f14-a095-f143b048837b.gif)
 
 
-![预览](https://gitee.com/wdppx/macos/raw/master/src/image/demo3.png "预览")
+As demonstrated, we only care about who the selected project is
+The status of the folder will be maintained by the component itself
+OnChange will pass in the results of the operation and update the status directly without any processing
 
+There's no need for anything else. It's just that simple. Don't doubt it
+If I have to say one more thing
+That's why you can not only customize fields
+You can also customize the icons for expanding and folding
+Selected icons Select a portion of the icons
+If you use TS development, you can check the specific types
+I believe it won't stump you, but I still choose to take a screenshot of the general type
 
+<img width="328" alt="image" src="https://user-images.githubusercontent.com/86196091/236648085-8095c975-26e3-4c34-90b3-ad1360dcd6ef.png">
 
+These are the content that you can customize to pass in, all of which are optional
+Of course, just like all mui components, you can also use sx to change the overall style of the components. If you encounter any problems, please come to Github to submit Issues
+<a href="https://github.com/SGDS666/mui-treeselect/edit/master/README.md">github</a>
 
-# 文档 document
-### NBLayout 参数类型 Parameter Type
-```typescript
-  NBLayout(NBarr: JSX.Element[], style?: React.CSSProperties | undefined,className?:string): JSX.Element
-  
-```
-
-## NBlayout 基于flex布局  Based on flex layout
-接收3个参数  第2,第3个为可选值
-
-第一个参数是组件列表 只有一层 虽然看上去是多维数组 其实row col两个函数最终返回都都是单个组件
-
-也就是说
- ```typescript
-   NBlayout([...arr]) || row([...arr]) || col([...arr])  返回值都是一个React组件
-```
-
-Receive the second of three parameters, and the third is an optional value
-
-The first parameter is that the component list has only one layer. 
-
-Although it looks like a multi-dimensional array, 
-
-in fact, both row col functions ultimately return a single component
-
-in other words
-```typescript
-   NBlayout([...arr]) || row([...arr]) || col([...arr])  =  <ReactComponent/> 
-
-```
-这样的设计实际上只是编写代码上有一定的可视化功能 使布局更为直观 方便调整
-
-
-第二个参数是 整个NbLayout 容器的样式 按照React.CSSProperties 类型提示去写即可 
-
-In fact, such design is just to write code,
-
-which has certain visualization functions to make the layout more intuitive and convenient to adjust
-
-The second parameter is to write the style of the entire NbLayout container according to the React.CSSProperties 
-type prompt
-
-需要注意的是 NBlayout row col 接受到的组件数组会自动填充key 所以无论是一个个写 还是使用arr.map 都无需手写key=...
-
-It should be noted that the component array received by NBlayout row col will automatically fill in keys, 
-so whether you write one by one or use arr.map, you do not need to write keys=
-
-第三个参数为替换自定义类名 方便自定义样式 和容器内的row col 隔离其他nblayout
-
-The third parameter is to replace the custom class name to facilitate custom style 
-and row col in the container to isolate other nblayouts
-## row&&col 
-``` typescript
-    row(arr: JSX.Element[], style?: React.CSSProperties | undefined, itemstyle?: React.CSSProperties | undefined): JSX.Element
-    col(arr: JSX.Element[], style?: React.CSSProperties | undefined, itemstyle?: React.CSSProperties | undefined): JSX.Element
-```
-接收3个参数  前2个 与NBlayout相同 第三个参数为row|col 内的子组件样式 
-
-调用row会将 组件列表用样式类.nb-row的div包括起来 
-
-具体样式如下
-
-The first two parameters are the same as NBlayout. 
-
-The third parameter is the sub component style in row | col
-
-Calling row will include the component list with the div of the style class. nb row
-
-The specific style is as follows
-
-```css
-.nb-row {
-    width: 100%;
-    display: flex ;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    flex-wrap: wrap;
-}
-```
-调用col会将 组件列表用样式类.nb-col的div包括起来 
-
-具体样式如下
-
-Calling col will include the component list with the div of the style class. nb col
-
-The specific style is as follows
-```css
-.nb-col{
-    max-width: 100%;
-    display: flex ;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    flex-wrap: wrap;
-}
-```
-如果自定义的组件不希望自动增长 可参照demo中的写法 或者直接在css中增加flex-grow:0;
-
-If you do not want the customized components to grow automatically,
-
-you can refer to the writing method in the demo or directly add flex grow: 0 in the css;
-
-```typescript
-    row([<Div />, <Div />, <Div />],{},{flexGrow:0}),
-```
-
-
-## 通过css调整col row 基础样式
-如果通过NBlayout组装使用
-可使用以下方式的css选择器 修改row 以及col 的基础样式规则 
-如果是单独使用 col 或者 row 请找一个最近的父结点类名或id替换 .nb-root
-如果NBlayout调用时接收了第三个参数 将.nb-root 替换为你自定义的类名
-
-If used by NBlayout assembly
-The basic style rules of row and col can be modified using the css selector in the following ways
-If col or row is used alone, please find the nearest parent node class name or id to replace. nb root
-If NBlayout receives the third parameter when calling, replace. nb root with your customized class name
-```css
-.nb-root .nb-row{
-
-}
-.nb-root .nb-col{
-
-}
-.myclass .nb-row{
-
-}
-.myclass .nb-col{
-    
-}
-```
-
-## 自定义组件规范
-
-如果自定义组件使用第三个参数item样式后未生效 请注意是否接收style属性 并赋值给组件内的div
-可参考demo中的Div组件
-
-If the custom component does not take effect after using the third parameter item style, please note whether to receive the style attribute and assign it to the div in the component
-Refer to the Div component in the demo
-
-```typescript
-interface NbDiv{
-    style?: React.CSSProperties,
-    children?: ReactNode
-}
-export const Div: React.FC<NbDiv> = ({ style, children }) => {
-    return (
-        <div style={style}> //自定义组件时 请接收style参数并赋值 style会被 Nblayout 自动传入
-        /**
-         //When customizing components, please receive the style parameter and assign a value. The style will be automatically imported by Nblayout
-         */
-            {children}
-        </div>
-        )
-}
-```

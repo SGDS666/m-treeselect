@@ -1,8 +1,8 @@
 {
   "name": "mui-treeselect",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
-  "homepage": "https://github.com/SGDS666/react-nblayout",
+  "homepage": "https://github.com/SGDS666/mui-treeselect",
   "main": "./dist/TreeSelect.js",
   "types": "./dist/TreeSelect.ts",
   "scripts": {
@@ -13,11 +13,10 @@
     "TypeScript",
     "javascript",
     "css",
-    "layout",
-    "nb",
+    "mui",
+    "treeselect",
     "react",
-    "easy",
-    "style"
+    "easy"
   ],
   "author": "sgds",
   "license": "ISC",

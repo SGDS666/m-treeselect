@@ -24,6 +24,7 @@ const TreeItem: React.FC<TreeItemProps> = (
         onChange
     }
 ) => {
+    const { labelRender } = useContext(TreeSelectContext)
     return (
         <Stack direction="row" sx={sx} alignItems="center">
             <Checkbox checked={checked} onChange={
@@ -33,7 +34,8 @@ const TreeItem: React.FC<TreeItemProps> = (
 
                 }
             } />
-            <Typography>{label}</Typography>
+            {labelRender ? labelRender(label) : <Typography>{label}</Typography>}
+
         </Stack>
     )
 }
@@ -65,7 +67,7 @@ const createTreeData = (datalist: any[], config: {
     id: string | number
     labelId: string | number
     childrenId: string | number
-    checkedDataIds?: any[],
+    checkedDataIds?: (string | number)[],
     selectAll?: boolean
 }) => {
     const { id, labelId, childrenId, checkedDataIds, selectAll } = config
@@ -103,7 +105,7 @@ const createTreeData = (datalist: any[], config: {
             }
         }
         else {
-            if (checkedDataIds?.includes?.(item[id])) {
+            if (checkedDataIds?.includes(item[id])) {
                 TreeData.push({ ...item, checked: true })
 
             } else {
@@ -126,7 +128,10 @@ const TreeFolder: React.FC<TreeFolderProps> = (
         onChildChange,
     }
 ) => {
-    const { id, labelId, childrenId, checkIconDict, ExpandICON, RetractICON, FolderICON } = useContext(TreeSelectContext)
+    const {
+        id, labelId, childrenId,
+        checkIconDict, ExpandICON, RetractICON,
+        FolderICON, labelRender } = useContext(TreeSelectContext)
     const [collapse, setCollapse] = useState(false)
     // console.log({ checkIconDict, checked, children, fieId })
     return (
@@ -154,7 +159,8 @@ const TreeFolder: React.FC<TreeFolderProps> = (
 
                         }
                     } />
-                <Typography>{label}</Typography>
+                {labelRender ? labelRender(label) : <Typography>{label}</Typography>}
+
 
 
             </Stack>
@@ -206,6 +212,7 @@ interface TreeSelectConfig {
     CheckAllICON?: ReactNode,
     ExpandICON?: ReactNode,
     RetractICON?: ReactNode,
+    labelRender?: (label: string | number) => ReactNode
     checkIconDict?: {
         all: ReactNode,
         part: ReactNode,
@@ -214,9 +221,10 @@ interface TreeSelectConfig {
 }
 
 interface TreeSelectProps extends TreeSelectConfig {
-    onChange?: (checkedIds: any[]) => void,
+    onChange?: (checkedIds: any[], checkedItems?: any[]) => void,
     data: any[],
     checkedDataIds: (string | number)[],
+
     sx?: SxProps
 }
 
@@ -241,7 +249,7 @@ export default function TreeSelect(props: TreeSelectProps) {
     const {
         id = "id", labelId = "label", childrenId = "children", data, checkedDataIds, onChange, sx,
         FolderICON, CheckPartICON, CheckAllICON,
-        ExpandICON, RetractICON
+        ExpandICON, RetractICON, labelRender
     } = props
     const TreeData = createTreeData(data, {
         id,
@@ -262,11 +270,11 @@ export default function TreeSelect(props: TreeSelectProps) {
         <TreeSelectContext.Provider value={{
             id, labelId, childrenId,
             FolderICON, CheckPartICON, CheckAllICON,
-            ExpandICON, RetractICON, checkIconDict
+            ExpandICON, RetractICON, checkIconDict, labelRender
         }}>
 
             <List sx={{
-                bgcolor: theme.palette.background.default,
+                bgcolor: theme.palette.background.paper,
                 minWidth: 300,
                 p: 2,
                 borderRadius: 2,

@@ -1,6 +1,6 @@
 {
   "name": "m-treeselect",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "homepage": "https://github.com/SGDS666/m-treeselect",
   "main": "./dist/TreeSelect.js",
@@ -15,6 +15,9 @@
     "css",
     "mui",
     "treeselect",
+    "mui treeselect",
+    "mui-treeselect",
+    "muitreeselect",
     "react",
     "easy"
   ],

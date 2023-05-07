@@ -52,13 +52,22 @@ As demonstrated, we only care about who the selected project is
 The status of the folder will be maintained by the component itself
 OnChange will pass in the results of the operation and update the status directly without any processing
 
-There's no need for anything else. It's just that simple. Don't doubt it
+Nothing else is needed. It's that simple. Don't doubt it
 If I have to say one more thing
-That's why you can not only customize fields
-You can also customize the icons for expanding and folding
-Selected icons Select a portion of the icons
-If you use TS development, you can check the specific types
-I believe it won't stump you, but I still choose to take a screenshot of the general type
+That is, you can not only customize fields
+You can also customize rendering using labelRender
+like this
+
+<img width="451" alt="image" src="https://user-images.githubusercontent.com/86196091/236660022-e494021a-4855-4881-befc-999dd6306aa9.png">
+<img width="459" alt="image" src="https://user-images.githubusercontent.com/86196091/236660027-4ceae507-c580-45e5-a63a-d38df621b6cc.png">
+
+
+
+
+You can also customize the icons used for expanding and collapsing
+Selected Icons Select Partial Icons
+If you use TS development, you can check for specific types
+I believe this won't disappoint you, but I still choose to take a screenshot of a regular type
 
 <img width="328" alt="image" src="https://user-images.githubusercontent.com/86196091/236648085-8095c975-26e3-4c34-90b3-ad1360dcd6ef.png">
 

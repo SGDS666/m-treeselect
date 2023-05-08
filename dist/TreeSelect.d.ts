@@ -22,5 +22,6 @@ interface TreeSelectProps extends TreeSelectConfig {
     checkedDataIds: (string | number)[];
     sx?: SxProps;
 }
-export default function TreeSelect(props: TreeSelectProps): JSX.Element;
-
+export declare const deepForEach: (data: any[], action: (item: any) => void, childrenId: string | number) => void;
+export default function TreeSelect(props: TreeSelectProps): React.JSX.Element;
+export {};

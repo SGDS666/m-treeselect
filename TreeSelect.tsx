@@ -3,7 +3,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import React, { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
 
 interface TreeBase {
     fieId: string | number,
@@ -234,7 +234,7 @@ interface TreeSelectProps extends TreeSelectConfig {
     sx?: SxProps
 }
 
-const deepForEach = (data: any[], action: (item: any) => void, childrenId: string | number) => {
+export const deepForEach = (data: any[], action: (item: any) => void, childrenId: string | number) => {
     data.forEach(item => {
         if (item[childrenId]?.length) {
             deepForEach(item[childrenId], action, childrenId)
@@ -257,12 +257,14 @@ export default function TreeSelect(props: TreeSelectProps) {
         FolderICON, CheckPartICON, CheckAllICON,
         ExpandICON, RetractICON, labelRender
     } = props
-    const TreeData = createTreeData(data, {
-        id,
-        labelId,
-        childrenId,
-        checkedDataIds
-    })
+    const TreeData = useMemo(() => {
+        return createTreeData(data, {
+            id,
+            labelId,
+            childrenId,
+            checkedDataIds
+        })
+    }, [checkedDataIds, childrenId, data, id, labelId])
     const checkIconDict = useMemo(() => {
         return {
             "all": CheckAllICON ?? <CheckBoxIcon />,
@@ -272,6 +274,17 @@ export default function TreeSelect(props: TreeSelectProps) {
     }, [CheckAllICON, CheckPartICON])
 
     const theme = useTheme()
+
+    const onChangeHandle = useCallback((checkedids: (string | number)[]) => {
+        const checkedItems: any[] = []
+        deepForEach(TreeData, (item) => {
+            if (checkedids.includes(item[id])) {
+                checkedItems.push(item)
+            }
+        }, childrenId)
+        onChange?.(checkedids, checkedItems)
+    }, [TreeData, childrenId, id, onChange])
+
     return (
         <TreeSelectContext.Provider value={{
             id, labelId, childrenId,
@@ -314,7 +327,7 @@ export default function TreeSelect(props: TreeSelectProps) {
 
                                             }
                                         }, childrenId)
-                                        onChange?.([...new Set([...checkedDataIds, ...newChecked])])
+                                        onChangeHandle?.([...new Set([...checkedDataIds, ...newChecked])])
                                     } else {
                                         const newChildren = createTreeData(children, {
                                             id,
@@ -327,7 +340,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                                                 const index = newChecked.indexOf(item[id])
                                                 newChecked.splice(index, 1)
                                             }
-                                            onChange?.(newChecked)
+                                            onChangeHandle?.(newChecked)
                                         }, childrenId)
                                     }
 
@@ -336,17 +349,18 @@ export default function TreeSelect(props: TreeSelectProps) {
                                 onChildChange={(cid, checked, other) => {
 
                                     if (checked === true) {
-                                        onChange?.([...checkedDataIds, cid])
+                                        onChangeHandle?.([...checkedDataIds, cid])
                                     } else {
                                         const newChecked = [...checkedDataIds]
                                         const index = newChecked.indexOf(cid)
                                         newChecked.splice(index, 1)
-                                        onChange?.(newChecked)
+                                        onChangeHandle?.(newChecked)
 
                                     }
                                 }}
                             />
                         } else {
+                            ``
                             return <TreeItem
                                 key={item[id]}
                                 fieId={item[id]}
@@ -357,12 +371,12 @@ export default function TreeSelect(props: TreeSelectProps) {
                                 onChange={(cid, checked, other) => {
                                     // console.log(cid, checked, other)
                                     if (checked === true) {
-                                        onChange?.([...checkedDataIds, cid])
+                                        onChangeHandle?.([...checkedDataIds, cid])
                                     } else {
                                         const newChecked = [...checkedDataIds]
                                         const index = newChecked.indexOf(cid)
                                         newChecked.splice(index, 1)
-                                        onChange?.(newChecked)
+                                        onChangeHandle?.(newChecked)
                                     }
                                 }}
                             />

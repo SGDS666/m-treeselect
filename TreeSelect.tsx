@@ -396,3 +396,56 @@ export default function TreeSelect(props: TreeSelectProps) {
         </TreeSelectContext.Provider>
     )
 }
+
+export const flatDataFormatter = (list: any[],
+    config: {
+        idfieid: string | number,
+        labelFieid: string | number,
+        isFolder: (item: any) => boolean,
+        isItParent: (Claimant: any, child: any) => boolean,
+        isHaveParents: (item: any) => boolean
+    }
+) => {
+    const { idfieid, labelFieid, isFolder, isItParent, isHaveParents } = config
+    if (!list.length) {
+        return
+    }
+    //扁平化数据转嵌套数据
+    const noParentsItems: any[] = []
+    const items: any = []
+    const folders: any = []
+    list.forEach(item => {
+        if (isFolder?.(item)) {
+            folders.push(item)
+
+        } else {
+            if (isHaveParents?.(item)) {
+                items.push(item)
+            } else {
+                noParentsItems.push(item)
+            }
+
+        }
+    })
+    const toTreeDataitem = (item: any) => ({
+        id: item[idfieid],
+        label: item[labelFieid],
+        extra: item,
+    })
+    const TreeData = [
+        ...folders.map((item: any) => {
+            return {
+                id: item[idfieid],
+                label: item[labelFieid],
+                extra: item,
+                children: items?.filter((child: any) => isItParent?.(item, child))?.map((item: any) => toTreeDataitem(item))
+            }
+        }),
+        ...noParentsItems.map(item => toTreeDataitem(item))
+    ]
+    return TreeData
+
+
+
+
+}

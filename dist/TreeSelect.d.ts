@@ -9,6 +9,7 @@ interface TreeSelectConfig {
     CheckAllICON?: ReactNode;
     ExpandICON?: ReactNode;
     RetractICON?: ReactNode;
+    labelRender?: (label: string | number) => ReactNode;
     checkIconDict?: {
         all: ReactNode;
         part: ReactNode;
@@ -16,10 +17,10 @@ interface TreeSelectConfig {
     };
 }
 interface TreeSelectProps extends TreeSelectConfig {
-    onChange?: (checkedIds: any[]) => void;
+    onChange?: (checkedIds: any[], checkedItems?: any[]) => void;
     data: any[];
     checkedDataIds: (string | number)[];
     sx?: SxProps;
 }
-export default function TreeSelect(props: TreeSelectProps): React.JSX.Element;
-export {};
+export default function TreeSelect(props: TreeSelectProps): JSX.Element;
+

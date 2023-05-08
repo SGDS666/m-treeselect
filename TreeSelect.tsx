@@ -3,7 +3,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 interface TreeBase {
     fieId: string | number,
@@ -133,11 +133,19 @@ const TreeFolder: React.FC<TreeFolderProps> = (
     }
 ) => {
     const {
-        id, labelId, childrenId,
+        id, labelId, childrenId, autoExpand,
         checkIconDict, ExpandICON, RetractICON,
         FolderICON, labelRender } = useContext(TreeSelectContext)
     const [collapse, setCollapse] = useState(false)
     // console.log({ checkIconDict, checked, children, fieId })
+    useEffect(() => {
+        if (autoExpand) {
+            if (checked !== "null") {
+                setCollapse(true)
+            }
+        }
+
+    }, [autoExpand, checked])
     return (
         <Stack sx={sx} >
             <Stack direction="row" alignItems="center" >
@@ -169,7 +177,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
 
             </Stack>
 
-            <Collapse in={collapse} timeout="auto" unmountOnExit sx={{ pl: 8, display: "felx", height: "36" }}>
+            <Collapse in={collapse} sx={{ pl: 8, display: "felx", height: "36", }}>
                 <div>
                     {
                         children?.map(item => {
@@ -213,6 +221,7 @@ interface TreeSelectConfig {
     id?: string | number
     labelId?: string | number,
     childrenId?: string | number,
+    autoExpand?: true,
     FolderICON?: ReactNode,
     CheckPartICON?: ReactNode,
     CheckAllICON?: ReactNode,
@@ -254,7 +263,7 @@ const TreeSelectContext = createContext<TreeSelectConfig>({
 export default function TreeSelect(props: TreeSelectProps) {
     const {
         id = "id", labelId = "label", childrenId = "children", data, checkedDataIds, onChange, sx,
-        FolderICON, CheckPartICON, CheckAllICON,
+        FolderICON, CheckPartICON, CheckAllICON, autoExpand,
         ExpandICON, RetractICON, labelRender
     } = props
     const TreeData = useMemo(() => {
@@ -287,7 +296,7 @@ export default function TreeSelect(props: TreeSelectProps) {
 
     return (
         <TreeSelectContext.Provider value={{
-            id, labelId, childrenId,
+            id, labelId, childrenId, autoExpand,
             FolderICON, CheckPartICON, CheckAllICON,
             ExpandICON, RetractICON, checkIconDict, labelRender
         }}>

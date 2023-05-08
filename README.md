@@ -1,3 +1,6 @@
+<a href="https://github.com/SGDS666/m-treeselect/blob/master/README.md">en</a>
+<a href="https://github.com/SGDS666/m-treeselect/blob/master/README(cn).md">中文</a>
+
 This is a tree selector completely based on mui component encapsulation without using third-party libraries
 
 Has the following characteristics
@@ -9,6 +12,7 @@ Has the following characteristics
 3 Easy to get started 0 Learning costs
 
 4 fully controlled components (state must be manually controlled, but believe me, this has been optimized very easily)
+(And this is just a basic component that you can encapsulate as you please)
 
 Let's take a look at what it looks like first
 

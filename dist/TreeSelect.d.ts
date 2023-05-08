@@ -25,4 +25,11 @@ interface TreeSelectProps extends TreeSelectConfig {
 }
 export declare const deepForEach: (data: any[], action: (item: any) => void, childrenId: string | number) => void;
 export default function TreeSelect(props: TreeSelectProps): React.JSX.Element;
+export declare const flatDataFormatter: (list: any[], config: {
+    idfieid: string | number;
+    labelFieid: string | number;
+    isFolder: (item: any) => boolean;
+    isItParent: (Claimant: any, child: any) => boolean;
+    isHaveParents: (item: any) => boolean;
+}) => any[];
 export {};

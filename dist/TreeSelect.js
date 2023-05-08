@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deepForEach = void 0;
+exports.flatDataFormatter = exports.deepForEach = void 0;
 const material_1 = require("@mui/material");
 const CheckBox_1 = __importDefault(require("@mui/icons-material/CheckBox"));
 const CheckBoxOutlineBlank_1 = __importDefault(require("@mui/icons-material/CheckBoxOutlineBlank"));
@@ -244,3 +244,45 @@ function TreeSelect(props) {
         }))));
 }
 exports.default = TreeSelect;
+const flatDataFormatter = (list, config) => {
+    const { idfieid, labelFieid, isFolder, isItParent, isHaveParents } = config;
+    if (!list.length) {
+        return;
+    }
+    //扁平化数据转嵌套数据
+    const noParentsItems = [];
+    const items = [];
+    const folders = [];
+    list.forEach(item => {
+        if (isFolder === null || isFolder === void 0 ? void 0 : isFolder(item)) {
+            folders.push(item);
+        }
+        else {
+            if (isHaveParents === null || isHaveParents === void 0 ? void 0 : isHaveParents(item)) {
+                items.push(item);
+            }
+            else {
+                noParentsItems.push(item);
+            }
+        }
+    });
+    const toTreeDataitem = (item) => ({
+        id: item[idfieid],
+        label: item[labelFieid],
+        extra: item,
+    });
+    const TreeData = [
+        ...folders.map((item) => {
+            var _a;
+            return {
+                id: item[idfieid],
+                label: item[labelFieid],
+                extra: item,
+                children: (_a = items === null || items === void 0 ? void 0 : items.filter((child) => isItParent === null || isItParent === void 0 ? void 0 : isItParent(item, child))) === null || _a === void 0 ? void 0 : _a.map((item) => toTreeDataitem(item))
+            };
+        }),
+        ...noParentsItems.map(item => toTreeDataitem(item))
+    ];
+    return TreeData;
+};
+exports.flatDataFormatter = flatDataFormatter;

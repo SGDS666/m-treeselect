@@ -4,6 +4,7 @@ interface TreeSelectConfig {
     id?: string | number;
     labelId?: string | number;
     childrenId?: string | number;
+    autoExpand?: true;
     FolderICON?: ReactNode;
     CheckPartICON?: ReactNode;
     CheckAllICON?: ReactNode;

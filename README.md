@@ -38,14 +38,15 @@ Adapting components to different formats is the best way to improve efficiency. 
 
 <img width="334" alt="image" src="https://user-images.githubusercontent.com/86196091/236752340-a343343c-af1b-4858-a3c3-879919293725.png">
 
-The third method is to provide a tool called flatDataFormatter to convert flattened data into component default data
-Take a look at the test data
+The third method is to provide a tool called flatDataFormatter to convert flat data into a data format that components can use
+Like below
 
-<img width="728" alt="image" src="https://user-images.githubusercontent.com/86196091/236808597-9bd1e564-ef5e-4828-9b63-ca2876e46711.png">
+<img width="631" alt="image" src="https://user-images.githubusercontent.com/86196091/236848790-652b4e7c-c6a5-405a-9c3a-918c0843049d.png">
 
-<img width="742" alt="image" src="https://user-images.githubusercontent.com/86196091/236808660-9fe64386-0efc-45ee-a6c4-7a8e9d2036f5.png">
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/86196091/236849047-c6511900-8278-4f53-a52e-697442a78187.png">
 
-![Kapture 2023-05-08 at 19 08 16](https://user-images.githubusercontent.com/86196091/236808765-d6f7ade9-d21b-475b-8efb-58434dfaf715.gif)
+
+
 
 This utility function comes with the component and is believed to assist in data processing
 

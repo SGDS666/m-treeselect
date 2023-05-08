@@ -279,11 +279,11 @@ export default function TreeSelect(props: TreeSelectProps) {
         const checkedItems: any[] = []
         deepForEach(TreeData, (item) => {
             if (checkedids.includes(item[id])) {
-                checkedItems.push(item)
+                checkedItems.push({ [id]: item[id], [labelId]: item[labelId], extra: item.extra })
             }
         }, childrenId)
         onChange?.(checkedids, checkedItems)
-    }, [TreeData, childrenId, id, onChange])
+    }, [TreeData, childrenId, id, labelId, onChange])
 
     return (
         <TreeSelectContext.Provider value={{

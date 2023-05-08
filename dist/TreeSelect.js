@@ -36,6 +36,7 @@ const react_1 = __importStar(require("react"));
 const TreeItem = ({ fieId, label, checked, disable, sx, onChange }) => {
     const { labelRender } = (0, react_1.useContext)(TreeSelectContext);
     return (react_1.default.createElement(material_1.Stack, { direction: "row", sx: sx, alignItems: "center" },
+        react_1.default.createElement(icons_material_1.ExpandLess, { sx: { contentVisibility: "hidden" } }),
         react_1.default.createElement(material_1.Checkbox, { disabled: disable, checked: checked, onChange: (e, checked) => {
                 onChange === null || onChange === void 0 ? void 0 : onChange(fieId, checked, {});
             } }),
@@ -228,7 +229,7 @@ function TreeSelect(props) {
             }
             else {
                 ``;
-                return react_1.default.createElement(TreeItem, { key: item[id], fieId: item[id], label: item[labelId], checked: item.checked, disable: item.disable, sx: { pl: 3 }, onChange: (cid, checked, other) => {
+                return react_1.default.createElement(TreeItem, { key: item[id], fieId: item[id], label: item[labelId], checked: item.checked, disable: item.disable, onChange: (cid, checked, other) => {
                         // console.log(cid, checked, other)
                         if (checked === true) {
                             onChangeHandle === null || onChangeHandle === void 0 ? void 0 : onChangeHandle([...checkedDataIds, cid]);
@@ -245,44 +246,51 @@ function TreeSelect(props) {
 }
 exports.default = TreeSelect;
 const flatDataFormatter = (list, config) => {
-    const { idfieid, labelFieid, isFolder, isItParent, isHaveParents } = config;
+    const { isFolder, isItParent, isHaveParents } = config;
     if (!list.length) {
         return;
     }
     //扁平化数据转嵌套数据
-    const noParentsItems = [];
-    const items = [];
     const folders = [];
+    const items = [];
     list.forEach(item => {
-        if (isFolder === null || isFolder === void 0 ? void 0 : isFolder(item)) {
-            folders.push(item);
+        if (isFolder(item)) {
+            folders.push(Object.assign(Object.assign({}, item), { children: [] }));
         }
         else {
-            if (isHaveParents === null || isHaveParents === void 0 ? void 0 : isHaveParents(item)) {
-                items.push(item);
-            }
-            else {
-                noParentsItems.push(item);
-            }
+            items.push(item);
         }
     });
-    const toTreeDataitem = (item) => ({
-        id: item[idfieid],
-        label: item[labelFieid],
-        extra: item,
+    folders.forEach((folder) => {
+        items.forEach((item) => {
+            if (isItParent(folder, item)) {
+                folder.children.push(item);
+            }
+        });
     });
-    const TreeData = [
-        ...folders.map((item) => {
-            var _a;
-            return {
-                id: item[idfieid],
-                label: item[labelFieid],
-                extra: item,
-                children: (_a = items === null || items === void 0 ? void 0 : items.filter((child) => isItParent === null || isItParent === void 0 ? void 0 : isItParent(item, child))) === null || _a === void 0 ? void 0 : _a.map((item) => toTreeDataitem(item))
-            };
-        }),
-        ...noParentsItems.map(item => toTreeDataitem(item))
-    ];
-    return TreeData;
+    const folderarr = [...folders];
+    const checkfolder = (folderArr = folderarr) => {
+        folderArr.forEach(folder1 => {
+            folderArr.forEach(folder2 => {
+                if (isItParent(folder1, folder2)) {
+                    folder1.children.push(folder2);
+                }
+            });
+        });
+    };
+    checkfolder(folderarr);
+    const Treelist = [];
+    folderarr.forEach(folder => {
+        if (!isHaveParents(folder)) {
+            Treelist.push(folder);
+        }
+    });
+    items.forEach((item) => {
+        if (!isHaveParents(item)) {
+            Treelist.push(item);
+        }
+    });
+    console.log({ Treelist });
+    return Treelist;
 };
 exports.flatDataFormatter = flatDataFormatter;

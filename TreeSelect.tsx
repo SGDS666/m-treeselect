@@ -29,6 +29,7 @@ const TreeItem: React.FC<TreeItemProps> = (
     const { labelRender } = useContext(TreeSelectContext)
     return (
         <Stack direction="row" sx={sx} alignItems="center">
+            <ExpandLess sx={{ contentVisibility: "hidden" }} />
             <Checkbox disabled={disable} checked={checked} onChange={
                 (e, checked) => {
 
@@ -376,7 +377,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                                 label={item[labelId]}
                                 checked={item.checked}
                                 disable={item.disable}
-                                sx={{ pl: 3 }}
+
                                 onChange={(cid, checked, other) => {
                                     // console.log(cid, checked, other)
                                     if (checked === true) {
@@ -397,53 +398,62 @@ export default function TreeSelect(props: TreeSelectProps) {
     )
 }
 
+
 export const flatDataFormatter = (list: any[],
     config: {
-        idfieid: string | number,
-        labelFieid: string | number,
         isFolder: (item: any) => boolean,
         isItParent: (Claimant: any, child: any) => boolean,
         isHaveParents: (item: any) => boolean
     }
 ) => {
-    const { idfieid, labelFieid, isFolder, isItParent, isHaveParents } = config
+    const { isFolder, isItParent, isHaveParents } = config
+
     if (!list.length) {
         return
     }
     //扁平化数据转嵌套数据
-    const noParentsItems: any[] = []
-    const items: any = []
     const folders: any = []
+    const items: any = []
     list.forEach(item => {
-        if (isFolder?.(item)) {
-            folders.push(item)
-
+        if (isFolder(item)) {
+            folders.push({ ...item, children: [] })
         } else {
-            if (isHaveParents?.(item)) {
-                items.push(item)
-            } else {
-                noParentsItems.push(item)
-            }
-
+            items.push(item)
         }
     })
-    const toTreeDataitem = (item: any) => ({
-        id: item[idfieid],
-        label: item[labelFieid],
-        extra: item,
-    })
-    const TreeData = [
-        ...folders.map((item: any) => {
-            return {
-                id: item[idfieid],
-                label: item[labelFieid],
-                extra: item,
-                children: items?.filter((child: any) => isItParent?.(item, child))?.map((item: any) => toTreeDataitem(item))
+    folders.forEach((folder: any) => {
+        items.forEach((item: any) => {
+            if (isItParent(folder, item)) {
+                folder.children.push(item)
             }
-        }),
-        ...noParentsItems.map(item => toTreeDataitem(item))
-    ]
-    return TreeData
+        })
+    })
+    const folderarr: any[] = [...folders]
+    const checkfolder = (folderArr: any[] = folderarr) => {
+        folderArr.forEach(folder1 => {
+            folderArr.forEach(folder2 => {
+                if (isItParent(folder1, folder2)) {
+                    folder1.children.push(folder2)
+                }
+
+            })
+        })
+
+    }
+    checkfolder(folderarr)
+    const Treelist: any[] = []
+    folderarr.forEach(folder => {
+        if (!isHaveParents(folder)) {
+            Treelist.push(folder)
+        }
+    })
+    items.forEach((item: any) => {
+        if (!isHaveParents(item)) {
+            Treelist.push(item)
+        }
+    })
+    console.log({ Treelist })
+    return Treelist
 
 
 

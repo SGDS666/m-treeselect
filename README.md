@@ -20,7 +20,7 @@ The two sides look a bit different because the one on the left is included in th
 
 
 First of all, I believe everyone will be more concerned about data format because it involves practical usage experience
-I have designed two data schemes. One is the default format, like this
+I have designed Three data schemes. One is the default format, like this
 
 <img width="422" alt="image" src="https://user-images.githubusercontent.com/86196091/236647435-4e7f32de-e80e-4d0b-90aa-6b98ae4fe26b.png">
 
@@ -37,6 +37,19 @@ But I believe that formatting is a headache in actual business, so I also added 
 Adapting components to different formats is the best way to improve efficiency. By specifying the corresponding key, development can proceed happily like this
 
 <img width="334" alt="image" src="https://user-images.githubusercontent.com/86196091/236752340-a343343c-af1b-4858-a3c3-879919293725.png">
+
+The third method is to provide a tool called flatDataFormatter to convert flattened data into component default data
+Take a look at the test data
+
+<img width="728" alt="image" src="https://user-images.githubusercontent.com/86196091/236808597-9bd1e564-ef5e-4828-9b63-ca2876e46711.png">
+
+<img width="742" alt="image" src="https://user-images.githubusercontent.com/86196091/236808660-9fe64386-0efc-45ee-a6c4-7a8e9d2036f5.png">
+
+![Kapture 2023-05-08 at 19 08 16](https://user-images.githubusercontent.com/86196091/236808765-d6f7ade9-d21b-475b-8efb-58434dfaf715.gif)
+
+This utility function comes with the component and is believed to assist in data processing
+
+
 
 These data are just the foundation for the initial rendering of the component, and the most challenging aspect is obtaining the data
 We can set the default selected items for the component and pass in a checkedDataids array

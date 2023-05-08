@@ -56,7 +56,8 @@ OnChange will pass in the results of the operation and update the status directl
 
 Nothing else is needed. It's that simple. Don't doubt it
 If I have to say one more thing
-That is, you can not only customize fields
+That is
+you can not only customize fields
 You can also customize rendering using labelRender
 like this
 
@@ -96,13 +97,23 @@ I believe this won't disappoint you, but I still choose to take a screenshot of 
 <img width="328" alt="image" src="https://user-images.githubusercontent.com/86196091/236648085-8095c975-26e3-4c34-90b3-ad1360dcd6ef.png">
 
 If you do not want an option or folder to be selected, you can pass in disable
-Perhaps you don't want users to randomly select all items and have them carefully select each one. You just need to disable the upper directory. If you need to disable all items, you need to add specific ones to each item
+Perhaps you don't want users to randomly select all items and have them carefully select each one. You just need to disable the upper directory. 
+If you need to disable all items, you need to add specific ones to each item
 
 <img width="767" alt="image" src="https://user-images.githubusercontent.com/86196091/236739548-7d9fdb76-3d39-4f87-b43b-b9bfdfb760ab.png">
 
 ![Kapture 2023-05-08 at 13 14 38](https://user-images.githubusercontent.com/86196091/236739716-832bf45b-77cf-4fe4-8d8f-6ddbf88f25a2.gif)
 
 These are the content that you can customize to pass in, all of which are optional
+
+You can pass in autoExpand and the selected items like this will automatically expand
+
+<img width="437" alt="image" src="https://user-images.githubusercontent.com/86196091/236802540-01663e26-1277-40c2-95cc-d8e4b0bb8e4f.png">
+
+![Kapture 2023-05-08 at 18 36 29](https://user-images.githubusercontent.com/86196091/236803055-0f5824d3-3459-4e7c-b569-4f6387818b5d.gif)
+
+
+
 Of course, just like all mui components, you can also use sx to change the overall style of the components. If you encounter any problems, please come to Github to submit Issues
 <a href="https://github.com/SGDS666/m-treeselect">github</a>
 

@@ -16,6 +16,7 @@ interface TreeItemProps extends TreeBase {
     disabled?: boolean
     onChange?: (id: string | number, value: boolean, other: any) => void
 }
+
 const TreeItem: React.FC<TreeItemProps> = (
     {
         fieId,
@@ -52,21 +53,6 @@ interface TreeFolderProps extends TreeBase {
     onChildChange?: (id: string | number, value: boolean, other: any) => void
 }
 
-
-
-// const createFolder = (children: any[]) => {
-//   const newFolder: any[] = []
-//   children.forEach(item => {
-
-//     if (item[childrenId]) {
-//       const newChildren = createFolder(item[childrenId])
-//       newFolder.push({ ...item, children: newChildren, checked: "part" })
-//     } else {
-//       newFolder.push({ ...item, checked: false })
-//     }
-//   })
-//   return newFolder
-// }
 const createTreeData = (datalist: any[], config: {
     id: string | number
     labelId: string | number
@@ -218,7 +204,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
     )
 }
 
-interface TreeSelectConfig {
+export interface TreeSelectConfig {
     id?: string | number
     labelId?: string | number,
     childrenId?: string | number,
@@ -236,7 +222,7 @@ interface TreeSelectConfig {
     }
 }
 
-interface TreeSelectProps extends TreeSelectConfig {
+export interface TreeSelectProps extends TreeSelectConfig {
     onChange?: (checkedIds: any[], checkedItems?: any[]) => void,
     data: any[],
     checkedDataIds: (string | number)[],

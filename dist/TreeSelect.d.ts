@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
 import React, { ReactNode } from "react";
-interface TreeSelectConfig {
+export interface TreeSelectConfig {
     id?: string | number;
     labelId?: string | number;
     childrenId?: string | number;
@@ -17,7 +17,7 @@ interface TreeSelectConfig {
         null: ReactNode;
     };
 }
-interface TreeSelectProps extends TreeSelectConfig {
+export interface TreeSelectProps extends TreeSelectConfig {
     onChange?: (checkedIds: any[], checkedItems?: any[]) => void;
     data: any[];
     checkedDataIds: (string | number)[];
@@ -30,4 +30,3 @@ export declare const flatDataFormatter: (list: any[], config: {
     isItParent: (Claimant: any, child: any) => boolean;
     isHaveParents: (item: any) => boolean;
 }) => any[];
-export {};

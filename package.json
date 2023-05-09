@@ -1,6 +1,6 @@
 {
   "name": "m-treeselect",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "",
   "homepage": "https://github.com/SGDS666/m-treeselect",
   "main": "./dist/TreeSelect.js",

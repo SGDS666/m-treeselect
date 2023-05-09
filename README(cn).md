@@ -94,13 +94,13 @@ OnChange不仅仅是给你一个选中ID的数组，它只是最简单的快速�
 <img width="328" alt="image" src="https://user-images.githubusercontent.com/86196091/236648085-8095c975-26e3-4c34-90b3-ad1360dcd6ef.png">
 
 如果您不想选择某个选项或文件夹，
-您可以传入 disable 
+您可以传入 disabled 
 或许您不希望用户随心所欲的选择所有项目而是让他们仔细选择每一项。
 只需要禁用上层目录即可。
 如果需要禁用所有项目，
-则需要为每个项目添加disable
+则需要为每个项目添加disabled
 
-<img width="767" alt="image" src="https://user-images.githubusercontent.com/86196091/236739548-7d9fdb76-3d39-4f87-b43b-b9bfdfb760ab.png">
+<img width="485" alt="image" src="https://user-images.githubusercontent.com/86196091/236975476-889dc357-6585-47ab-8b23-f9b012d94b11.png">
 
 ![Kapture 2023-05-08 at 13 14 38](https://user-images.githubusercontent.com/86196091/236739716-832bf45b-77cf-4fe4-8d8f-6ddbf88f25a2.gif)
 

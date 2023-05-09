@@ -13,7 +13,7 @@ interface TreeBase {
 }
 interface TreeItemProps extends TreeBase {
     checked: boolean,
-    disable?: boolean
+    disabled?: boolean
     onChange?: (id: string | number, value: boolean, other: any) => void
 }
 const TreeItem: React.FC<TreeItemProps> = (
@@ -21,7 +21,7 @@ const TreeItem: React.FC<TreeItemProps> = (
         fieId,
         label,
         checked,
-        disable,
+        disabled,
         sx,
         onChange
     }
@@ -30,7 +30,7 @@ const TreeItem: React.FC<TreeItemProps> = (
     return (
         <Stack direction="row" sx={sx} alignItems="center">
             <ExpandLess sx={{ contentVisibility: "hidden" }} />
-            <Checkbox disabled={disable} checked={checked} onChange={
+            <Checkbox disabled={disabled} checked={checked} onChange={
                 (e, checked) => {
 
                     onChange?.(fieId, checked, {})
@@ -47,7 +47,7 @@ interface TreeFolderProps extends TreeBase {
     children: {
         [key: string | number]: any
     }[],
-    disable?: boolean,
+    disabled?: boolean,
     onChange?: (id: string | number, value: TreeFolderProps["checked"], other: any) => void
     onChildChange?: (id: string | number, value: boolean, other: any) => void
 }
@@ -126,7 +126,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
         label,
         fieId,
         checked,
-        disable,
+        disabled,
         children,
         sx,
         onChange,
@@ -161,7 +161,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
                     checkedIcon={
                         checkIconDict?.[checked]
                     }
-                    disabled={disable}
+                    disabled={disabled}
                     onChange={
                         (e, checked) => {
                             if (checked) { //全选
@@ -192,7 +192,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
                                         checked={item.checked as "all" | "part" | "null"}
                                         children={item[childrenId as string | number]}
                                         onChange={onChange}
-                                        disable={item.disable}
+                                        disabled={item.disabled}
                                         onChildChange={onChildChange}
 
                                     />
@@ -205,7 +205,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
                                         fieId={item[id as string | number]}
                                         label={item[labelId as string | number]}
                                         checked={item.checked as boolean}
-                                        disable={item.disable}
+                                        disabled={item.disabled}
                                         onChange={onChildChange}
                                     />
                                 )
@@ -318,7 +318,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                                 label={item[labelId]}
                                 children={item[childrenId]}
                                 checked={item.checked}
-                                disable={item.disable}
+                                disabled={item.disabled}
                                 onChange={(cid, checked, other) => {
                                     const { children } = other
 
@@ -376,7 +376,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                                 fieId={item[id]}
                                 label={item[labelId]}
                                 checked={item.checked}
-                                disable={item.disable}
+                                disabled={item.disabled}
 
                                 onChange={(cid, checked, other) => {
                                     // console.log(cid, checked, other)

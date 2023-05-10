@@ -110,7 +110,10 @@ OnChange不仅仅是给你一个选中ID的数组，它只是最简单的快速�
 
 <img width="437" alt="image" src="https://user-images.githubusercontent.com/86196091/236802540-01663e26-1277-40c2-95cc-d8e4b0bb8e4f.png">
 
+
 ![Kapture 2023-05-08 at 18 36 29](https://user-images.githubusercontent.com/86196091/236803055-0f5824d3-3459-4e7c-b569-4f6387818b5d.gif)
+
+也可以传入defaultExpandAll这样整个组件会默认全部展开 
 
 当然，就像所有的MUI组件一样，你也可以使用sx来改变组件的整体风格。如果遇到什么问题，欢迎来Github提交Issues 
 

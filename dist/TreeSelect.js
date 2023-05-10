@@ -86,8 +86,8 @@ const createTreeData = (datalist, config) => {
     return TreeData;
 };
 const TreeFolder = ({ label, fieId, checked, disabled, children, sx, onChange, onChildChange, }) => {
-    const { id, labelId, childrenId, autoExpand, checkIconDict, ExpandICON, RetractICON, FolderICON, labelRender } = (0, react_1.useContext)(TreeSelectContext);
-    const [collapse, setCollapse] = (0, react_1.useState)(false);
+    const { id, labelId, childrenId, autoExpand, defaultExpandAll, checkIconDict, ExpandICON, RetractICON, FolderICON, labelRender } = (0, react_1.useContext)(TreeSelectContext);
+    const [collapse, setCollapse] = (0, react_1.useState)(defaultExpandAll !== null && defaultExpandAll !== void 0 ? defaultExpandAll : false);
     // console.log({ checkIconDict, checked, children, fieId })
     (0, react_1.useEffect)(() => {
         if (autoExpand) {
@@ -138,7 +138,7 @@ const TreeSelectContext = (0, react_1.createContext)({
     childrenId: "children",
 });
 function TreeSelect(props) {
-    const { id = "id", labelId = "label", childrenId = "children", data, checkedDataIds, onChange, sx, FolderICON, CheckPartICON, CheckAllICON, autoExpand, ExpandICON, RetractICON, labelRender } = props;
+    const { id = "id", labelId = "label", childrenId = "children", data, checkedDataIds, onChange, sx, FolderICON, CheckPartICON, CheckAllICON, autoExpand, ExpandICON, RetractICON, labelRender, defaultExpandAll } = props;
     const TreeData = (0, react_1.useMemo)(() => {
         return createTreeData(data, {
             id,
@@ -166,7 +166,7 @@ function TreeSelect(props) {
     }, [TreeData, childrenId, id, labelId, onChange]);
     return (react_1.default.createElement(TreeSelectContext.Provider, { value: {
             id, labelId, childrenId, autoExpand,
-            FolderICON, CheckPartICON, CheckAllICON,
+            FolderICON, CheckPartICON, CheckAllICON, defaultExpandAll,
             ExpandICON, RetractICON, checkIconDict, labelRender
         } },
         react_1.default.createElement(material_1.List, { sx: Object.assign({ bgcolor: theme.palette.background.paper, minWidth: 300, p: 2, borderRadius: 2 }, sx) }, TreeData.map(item => {
@@ -278,7 +278,7 @@ const flatDataFormatter = (list, config) => {
             Treelist.push(item);
         }
     });
-    console.log({ Treelist });
+    //   console.log({ Treelist })
     return Treelist;
 };
 exports.flatDataFormatter = flatDataFormatter;

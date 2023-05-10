@@ -5,6 +5,7 @@ export interface TreeSelectConfig {
     labelId?: string | number;
     childrenId?: string | number;
     autoExpand?: true;
+    defaultExpandAll?: true;
     FolderICON?: ReactNode;
     CheckPartICON?: ReactNode;
     CheckAllICON?: ReactNode;

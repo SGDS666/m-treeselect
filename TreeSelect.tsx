@@ -120,10 +120,10 @@ const TreeFolder: React.FC<TreeFolderProps> = (
     }
 ) => {
     const {
-        id, labelId, childrenId, autoExpand,
+        id, labelId, childrenId, autoExpand, defaultExpandAll,
         checkIconDict, ExpandICON, RetractICON,
         FolderICON, labelRender } = useContext(TreeSelectContext)
-    const [collapse, setCollapse] = useState(false)
+    const [collapse, setCollapse] = useState(defaultExpandAll ?? false)
     // console.log({ checkIconDict, checked, children, fieId })
     useEffect(() => {
         if (autoExpand) {
@@ -209,6 +209,7 @@ export interface TreeSelectConfig {
     labelId?: string | number,
     childrenId?: string | number,
     autoExpand?: true,
+    defaultExpandAll?: true,
     FolderICON?: ReactNode,
     CheckPartICON?: ReactNode,
     CheckAllICON?: ReactNode,
@@ -251,7 +252,7 @@ export default function TreeSelect(props: TreeSelectProps) {
     const {
         id = "id", labelId = "label", childrenId = "children", data, checkedDataIds, onChange, sx,
         FolderICON, CheckPartICON, CheckAllICON, autoExpand,
-        ExpandICON, RetractICON, labelRender
+        ExpandICON, RetractICON, labelRender, defaultExpandAll
     } = props
     const TreeData = useMemo(() => {
         return createTreeData(data, {
@@ -284,7 +285,7 @@ export default function TreeSelect(props: TreeSelectProps) {
     return (
         <TreeSelectContext.Provider value={{
             id, labelId, childrenId, autoExpand,
-            FolderICON, CheckPartICON, CheckAllICON,
+            FolderICON, CheckPartICON, CheckAllICON, defaultExpandAll,
             ExpandICON, RetractICON, checkIconDict, labelRender
         }}>
 
@@ -438,7 +439,7 @@ export const flatDataFormatter = (list: any[],
             Treelist.push(item)
         }
     })
-    console.log({ Treelist })
+    //   console.log({ Treelist })
     return Treelist
 
 

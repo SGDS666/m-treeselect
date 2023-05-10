@@ -130,7 +130,7 @@ You can pass in autoExpand and the selected items like this will automatically e
 
 ![Kapture 2023-05-08 at 18 36 29](https://user-images.githubusercontent.com/86196091/236803055-0f5824d3-3459-4e7c-b569-4f6387818b5d.gif)
 
-
+You can also pass in defaultExpandAll so that the entire component will be expanded by default
 
 Of course, just like all mui components, you can also use sx to change the overall style of the components. If you encounter any problems, please come to Github to submit Issues
 <a href="https://github.com/SGDS666/m-treeselect">github</a>

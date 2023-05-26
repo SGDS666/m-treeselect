@@ -80,7 +80,7 @@ you can not only customize fields
 You can also customize rendering using labelRender
 like this
 
-<img width="419" alt="image" src="https://user-images.githubusercontent.com/86196091/236752813-a6403f40-e617-40de-bffe-e7dd9093f42c.png">
+<img width="669" alt="image" src="https://github.com/SGDS666/m-treeselect/assets/86196091/f5e3834c-88e0-4ff8-9829-bbef14bc38a3">
 
 <img width="459" alt="image" src="https://user-images.githubusercontent.com/86196091/236660027-4ceae507-c580-45e5-a63a-d38df621b6cc.png">
 

@@ -62,7 +62,7 @@ ID决定了你实际控制state的key值 组件的最终形式由state中固定�
 
 那就是你不仅可以自定义字段 你还可以像这样使用 labelRender 自定义渲label
 
-<img width="419" alt="image" src="https://user-images.githubusercontent.com/86196091/236752813-a6403f40-e617-40de-bffe-e7dd9093f42c.png">
+<img width="669" alt="image" src="https://github.com/SGDS666/m-treeselect/assets/86196091/10225ac1-76fd-462d-bd3b-58cf10bac797">
 
 <img width="459" alt="image" src="https://user-images.githubusercontent.com/86196091/236660027-4ceae507-c580-45e5-a63a-d38df621b6cc.png">
 

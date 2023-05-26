@@ -1,5 +1,6 @@
 <a href="https://github.com/SGDS666/m-treeselect/blob/master/README.md">en</a>
 <a href="https://github.com/SGDS666/m-treeselect/blob/master/README(cn).md">中文</a>
+<a href="https://github.com/SGDS666/m-treeselect/blob/master/README(update).md">Update Log</a>
 
 This is a tree selector completely based on mui component encapsulation without using third-party libraries
 

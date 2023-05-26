@@ -1,5 +1,6 @@
 <a href="https://github.com/SGDS666/m-treeselect/blob/master/README.md">英文</a>
 <a href="https://github.com/SGDS666/m-treeselect/blob/master/README(cn).md">中文</a>
+<a href="https://github.com/SGDS666/m-treeselect/blob/master/README(update).md">更新日志</a>
 
 这是一个完全基于mui组件封装的树选择器，没有使用第三方库
 

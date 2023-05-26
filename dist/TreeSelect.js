@@ -33,21 +33,26 @@ const CheckBoxOutlineBlank_1 = __importDefault(require("@mui/icons-material/Chec
 const IndeterminateCheckBox_1 = __importDefault(require("@mui/icons-material/IndeterminateCheckBox"));
 const icons_material_1 = require("@mui/icons-material");
 const react_1 = __importStar(require("react"));
-const TreeItem = ({ fieId, label, checked, disabled, sx, onChange }) => {
+const TreeItem = ({ field, label, checked, disabled, sx, onChange }) => {
     const { labelRender } = (0, react_1.useContext)(TreeSelectContext);
     return (react_1.default.createElement(material_1.Stack, { direction: "row", sx: sx, alignItems: "center" },
         react_1.default.createElement(icons_material_1.ExpandLess, { sx: { contentVisibility: "hidden" } }),
-        react_1.default.createElement(material_1.Checkbox, { disabled: disabled, checked: checked, onChange: (e, checked) => {
-                onChange === null || onChange === void 0 ? void 0 : onChange(fieId, checked, {});
+        react_1.default.createElement(material_1.Checkbox, { size: "small", disabled: disabled, checked: checked, onChange: (e, checked) => {
+                onChange === null || onChange === void 0 ? void 0 : onChange(field, checked, {});
             } }),
-        labelRender ? labelRender(label) : react_1.default.createElement(material_1.Typography, null, label)));
+        labelRender ? labelRender({
+            field,
+            label,
+            checked,
+            disabled,
+        }) : react_1.default.createElement(material_1.Typography, null, label)));
 };
 const createTreeData = (datalist, config) => {
     const { id, labelId, childrenId, checkedDataIds, selectAll } = config;
     const TreeData = [];
     datalist.forEach(item => {
         var _a;
-        if ((_a = item[childrenId]) === null || _a === void 0 ? void 0 : _a.length) {
+        if (((_a = item[childrenId]) === null || _a === void 0 ? void 0 : _a.length) > 0) {
             const newfolder = createTreeData(item[childrenId], { id, labelId, childrenId, checkedDataIds, selectAll });
             let selectType = undefined;
             (0, exports.deepForEach)(newfolder, (item) => {
@@ -85,10 +90,10 @@ const createTreeData = (datalist, config) => {
     });
     return TreeData;
 };
-const TreeFolder = ({ label, fieId, checked, disabled, children, sx, onChange, onChildChange, }) => {
+const TreeFolder = ({ label, field, checked, disabled, children, sx, onChange, onChildChange, }) => {
     const { id, labelId, childrenId, autoExpand, defaultExpandAll, checkIconDict, ExpandICON, RetractICON, FolderICON, labelRender } = (0, react_1.useContext)(TreeSelectContext);
     const [collapse, setCollapse] = (0, react_1.useState)(defaultExpandAll !== null && defaultExpandAll !== void 0 ? defaultExpandAll : false);
-    // console.log({ checkIconDict, checked, children, fieId })
+    // console.log({ checkIconDict, checked, children, field })
     (0, react_1.useEffect)(() => {
         if (autoExpand) {
             if (checked !== "null") {
@@ -99,24 +104,29 @@ const TreeFolder = ({ label, fieId, checked, disabled, children, sx, onChange, o
     return (react_1.default.createElement(material_1.Stack, { sx: sx },
         react_1.default.createElement(material_1.Stack, { direction: "row", alignItems: "center" },
             react_1.default.createElement("div", { style: { display: "flex", alignItems: "center" }, onClick: () => setCollapse(!collapse) }, collapse ? RetractICON !== null && RetractICON !== void 0 ? RetractICON : react_1.default.createElement(icons_material_1.ExpandLess, null) : ExpandICON !== null && ExpandICON !== void 0 ? ExpandICON : react_1.default.createElement(icons_material_1.ExpandMore, null)),
-            react_1.default.createElement(material_1.Checkbox, { checked: checked === "null" ? false : true, icon: FolderICON, checkedIcon: checkIconDict === null || checkIconDict === void 0 ? void 0 : checkIconDict[checked], disabled: disabled, onChange: (e, checked) => {
+            react_1.default.createElement(material_1.Checkbox, { size: "small", checked: checked === "all" ? true : false, icon: FolderICON, checkedIcon: checkIconDict === null || checkIconDict === void 0 ? void 0 : checkIconDict[checked], disabled: disabled || children.length <= 1, onChange: (e, checked) => {
                     if (checked) { //全选
-                        onChange === null || onChange === void 0 ? void 0 : onChange(fieId, "all", { children });
+                        onChange === null || onChange === void 0 ? void 0 : onChange(field, "all", { children });
                     }
                     else {
-                        onChange === null || onChange === void 0 ? void 0 : onChange(fieId, "null", { children });
+                        onChange === null || onChange === void 0 ? void 0 : onChange(field, "null", { children });
                     }
                 } }),
-            labelRender ? labelRender(label) : react_1.default.createElement(material_1.Typography, null, label)),
-        react_1.default.createElement(material_1.Collapse, { in: collapse, sx: { pl: 8, display: "felx", height: "36", } },
+            labelRender ? labelRender({
+                field,
+                label,
+                checked: checked == "null" ? false : true,
+                disabled
+            }) : react_1.default.createElement(material_1.Typography, null, label)),
+        react_1.default.createElement(material_1.Collapse, { in: collapse, sx: { pl: 2, display: "felx", height: "36", } },
             react_1.default.createElement("div", null, children === null || children === void 0 ? void 0 : children.map(item => {
                 var _a;
                 if ((_a = item[childrenId]) === null || _a === void 0 ? void 0 : _a.length) {
                     // console.log({ item })
-                    return (react_1.default.createElement(TreeFolder, { key: item[id], fieId: item[id], label: item[labelId], checked: item.checked, children: item[childrenId], onChange: onChange, disabled: item.disabled, onChildChange: onChildChange }));
+                    return (react_1.default.createElement(TreeFolder, { key: item[id], field: item[id], label: item[labelId], checked: item.checked, children: item[childrenId], onChange: onChange, disabled: item.disabled, onChildChange: onChildChange }));
                 }
                 else {
-                    return (react_1.default.createElement(TreeItem, { key: item[id], fieId: item[id], label: item[labelId], checked: item.checked, disabled: item.disabled, onChange: onChildChange }));
+                    return (react_1.default.createElement(TreeItem, { key: item[id], field: item[id], label: item[labelId], checked: item.checked, disabled: item.disabled, onChange: onChildChange }));
                 }
             })))));
 };
@@ -171,7 +181,7 @@ function TreeSelect(props) {
         } },
         react_1.default.createElement(material_1.List, { sx: Object.assign({ bgcolor: theme.palette.background.paper, minWidth: 300, p: 2, borderRadius: 2 }, sx) }, TreeData.map(item => {
             if (item[childrenId]) {
-                return react_1.default.createElement(TreeFolder, { key: item[id], fieId: item[id], label: item[labelId], children: item[childrenId], checked: item.checked, disabled: item.disabled, onChange: (cid, checked, other) => {
+                return react_1.default.createElement(TreeFolder, { key: item[id], field: item[id], label: item[labelId], children: item[childrenId], checked: item.checked, disabled: item.disabled, onChange: (cid, checked, other) => {
                         const { children } = other;
                         if (checked === "all") {
                             const newChildren = createTreeData(children, {
@@ -217,7 +227,7 @@ function TreeSelect(props) {
             }
             else {
                 ``;
-                return react_1.default.createElement(TreeItem, { key: item[id], fieId: item[id], label: item[labelId], checked: item.checked, disabled: item.disabled, onChange: (cid, checked, other) => {
+                return react_1.default.createElement(TreeItem, { key: item[id], field: item[id], label: item[labelId], checked: item.checked, disabled: item.disabled, onChange: (cid, checked, other) => {
                         // console.log(cid, checked, other)
                         if (checked === true) {
                             onChangeHandle === null || onChangeHandle === void 0 ? void 0 : onChangeHandle([...checkedDataIds, cid]);
@@ -278,7 +288,7 @@ const flatDataFormatter = (list, config) => {
             Treelist.push(item);
         }
     });
-    //   console.log({ Treelist })
+    console.log({ Treelist });
     return Treelist;
 };
 exports.flatDataFormatter = flatDataFormatter;

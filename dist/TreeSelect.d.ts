@@ -11,7 +11,12 @@ export interface TreeSelectConfig {
     CheckAllICON?: ReactNode;
     ExpandICON?: ReactNode;
     RetractICON?: ReactNode;
-    labelRender?: (label: string | number) => ReactNode;
+    labelRender?: ({ field, label, checked, disabled, }: {
+        field: string | number;
+        label: string | number;
+        checked: boolean;
+        disabled?: boolean;
+    }) => ReactNode;
     checkIconDict?: {
         all: ReactNode;
         part: ReactNode;

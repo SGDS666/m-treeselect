@@ -6,7 +6,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 interface TreeBase {
-    fieId: string | number,
+    field: string | number,
     label: string | number,
 
     sx?: SxProps
@@ -19,7 +19,7 @@ interface TreeItemProps extends TreeBase {
 
 const TreeItem: React.FC<TreeItemProps> = (
     {
-        fieId,
+        field,
         label,
         checked,
         disabled,
@@ -31,14 +31,19 @@ const TreeItem: React.FC<TreeItemProps> = (
     return (
         <Stack direction="row" sx={sx} alignItems="center">
             <ExpandLess sx={{ contentVisibility: "hidden" }} />
-            <Checkbox disabled={disabled} checked={checked} onChange={
+            <Checkbox size="small" disabled={disabled} checked={checked} onChange={
                 (e, checked) => {
 
-                    onChange?.(fieId, checked, {})
+                    onChange?.(field, checked, {})
 
                 }
             } />
-            {labelRender ? labelRender(label) : <Typography>{label}</Typography>}
+            {labelRender ? labelRender({
+                field,
+                label,
+                checked,
+                disabled,
+            }) : <Typography>{label}</Typography>}
 
         </Stack>
     )
@@ -64,7 +69,7 @@ const createTreeData = (datalist: any[], config: {
     const TreeData: any[] = []
     datalist.forEach(item => {
 
-        if (item[childrenId]?.length) {
+        if (item[childrenId]?.length > 0) {
             const newfolder = createTreeData(item[childrenId], { id, labelId, childrenId, checkedDataIds, selectAll })
             let selectType: any = undefined
 
@@ -110,7 +115,7 @@ const createTreeData = (datalist: any[], config: {
 const TreeFolder: React.FC<TreeFolderProps> = (
     {
         label,
-        fieId,
+        field,
         checked,
         disabled,
         children,
@@ -124,7 +129,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
         checkIconDict, ExpandICON, RetractICON,
         FolderICON, labelRender } = useContext(TreeSelectContext)
     const [collapse, setCollapse] = useState(defaultExpandAll ?? false)
-    // console.log({ checkIconDict, checked, children, fieId })
+    // console.log({ checkIconDict, checked, children, field })
     useEffect(() => {
         if (autoExpand) {
             if (checked !== "null") {
@@ -142,29 +147,35 @@ const TreeFolder: React.FC<TreeFolderProps> = (
                     {collapse ? RetractICON ?? <ExpandLess /> : ExpandICON ?? <ExpandMore />}
                 </div>}
                 <Checkbox
-                    checked={checked === "null" ? false : true}
+                    size="small"
+                    checked={checked === "all" ? true : false}
                     icon={FolderICON}
                     checkedIcon={
                         checkIconDict?.[checked]
                     }
-                    disabled={disabled}
+                    disabled={disabled || children.length <= 1}
                     onChange={
                         (e, checked) => {
                             if (checked) { //全选
-                                onChange?.(fieId, "all", { children })
+                                onChange?.(field, "all", { children })
                             } else {
-                                onChange?.(fieId, "null", { children })
+                                onChange?.(field, "null", { children })
                             }
 
                         }
                     } />
-                {labelRender ? labelRender(label) : <Typography>{label}</Typography>}
+                {labelRender ? labelRender({
+                    field,
+                    label,
+                    checked: checked == "null" ? false : true,
+                    disabled
+                }) : <Typography>{label}</Typography>}
 
 
 
             </Stack>
 
-            <Collapse in={collapse} sx={{ pl: 8, display: "felx", height: "36", }}>
+            <Collapse in={collapse} sx={{ pl: 2, display: "felx", height: "36", }}>
                 <div>
                     {
                         children?.map(item => {
@@ -173,7 +184,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
                                 return (
                                     <TreeFolder
                                         key={item[id as string | number]}
-                                        fieId={item[id as string | number]}
+                                        field={item[id as string | number]}
                                         label={item[labelId as string | number]}
                                         checked={item.checked as "all" | "part" | "null"}
                                         children={item[childrenId as string | number]}
@@ -188,7 +199,7 @@ const TreeFolder: React.FC<TreeFolderProps> = (
                                 return (
                                     <TreeItem
                                         key={item[id as string | number]}
-                                        fieId={item[id as string | number]}
+                                        field={item[id as string | number]}
                                         label={item[labelId as string | number]}
                                         checked={item.checked as boolean}
                                         disabled={item.disabled}
@@ -215,7 +226,16 @@ export interface TreeSelectConfig {
     CheckAllICON?: ReactNode,
     ExpandICON?: ReactNode,
     RetractICON?: ReactNode,
-    labelRender?: (label: string | number) => ReactNode
+    labelRender?: ({
+        field,
+        label,
+        checked,
+        disabled, }: {
+            field: string | number,
+            label: string | number,
+            checked: boolean,
+            disabled?: boolean,
+        }) => ReactNode
     checkIconDict?: {
         all: ReactNode,
         part: ReactNode,
@@ -301,7 +321,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                         if (item[childrenId]) {
                             return <TreeFolder
                                 key={item[id]}
-                                fieId={item[id]}
+                                field={item[id]}
                                 label={item[labelId]}
                                 children={item[childrenId]}
                                 checked={item.checked}
@@ -360,7 +380,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                             ``
                             return <TreeItem
                                 key={item[id]}
-                                fieId={item[id]}
+                                field={item[id]}
                                 label={item[labelId]}
                                 checked={item.checked}
                                 disabled={item.disabled}
@@ -439,7 +459,7 @@ export const flatDataFormatter = (list: any[],
             Treelist.push(item)
         }
     })
-    //   console.log({ Treelist })
+    console.log({ Treelist })
     return Treelist
 
 

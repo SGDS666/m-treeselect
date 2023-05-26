@@ -299,7 +299,7 @@ export default function TreeSelect(props: TreeSelectProps) {
                 checkedItems.push({ [id]: item[id], [labelId]: item[labelId], extra: item.extra })
             }
         }, childrenId)
-        onChange?.(checkedids, checkedItems)
+        { onChange?.(checkedids, checkedItems) }
     }, [TreeData, childrenId, id, labelId, onChange])
 
     return (
@@ -357,8 +357,9 @@ export default function TreeSelect(props: TreeSelectProps) {
                                                 const index = newChecked.indexOf(item[id])
                                                 newChecked.splice(index, 1)
                                             }
-                                            onChangeHandle?.(newChecked)
+
                                         }, childrenId)
+                                        onChangeHandle?.(newChecked)
                                     }
 
 

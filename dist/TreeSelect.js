@@ -172,7 +172,9 @@ function TreeSelect(props) {
                 checkedItems.push({ [id]: item[id], [labelId]: item[labelId], extra: item.extra });
             }
         }, childrenId);
-        onChange === null || onChange === void 0 ? void 0 : onChange(checkedids, checkedItems);
+        {
+            onChange === null || onChange === void 0 ? void 0 : onChange(checkedids, checkedItems);
+        }
     }, [TreeData, childrenId, id, labelId, onChange]);
     return (react_1.default.createElement(TreeSelectContext.Provider, { value: {
             id, labelId, childrenId, autoExpand,
@@ -210,8 +212,8 @@ function TreeSelect(props) {
                                     const index = newChecked.indexOf(item[id]);
                                     newChecked.splice(index, 1);
                                 }
-                                onChangeHandle === null || onChangeHandle === void 0 ? void 0 : onChangeHandle(newChecked);
                             }, childrenId);
+                            onChangeHandle === null || onChangeHandle === void 0 ? void 0 : onChangeHandle(newChecked);
                         }
                     }, onChildChange: (cid, checked, other) => {
                         if (checked === true) {
